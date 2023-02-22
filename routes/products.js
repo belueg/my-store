@@ -28,5 +28,25 @@ router.post('/', (req, res) => {
   })
 })
 
+router.patch('/:id', (req, res) => {
+  const body = req.body
+
+  const productIndex = productsDB.findIndex(product => product.id == req.params.id)
+  console.log('router.patch ~ productIndex', productIndex)
+
+  productsDB[productIndex] = {
+    ...productsDB[productIndex],
+    name: body.name
+  }
+
+  const prodList = JSON.stringify(productsDB)
+
+  updateDatabase(prodList)
+
+  res.json({
+    message: "updated successfully",
+    data: body
+  })
+})
 
 module.exports = router;
