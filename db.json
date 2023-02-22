@@ -1,0 +1,30 @@
+[
+  {
+    "name": "product1",
+    "price": 2300,
+    "id": 1,
+    "category": "accommodation"
+  },
+  {
+    "name": "product2",
+    "price": 2700,
+    "id": 2,
+    "category": "flights"
+  },
+  {
+    "name": "product3",
+    "price": 2900,
+    "id": 3,
+    "category": "accommodation"
+  },
+  {
+    "name": "Product created by belen",
+    "price": 23440,
+    "category": "accommodation"
+  },
+  {
+    "name": "Other product",
+    "price": 2700,
+    "category": "flights"
+  }
+]

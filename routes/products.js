@@ -1,11 +1,11 @@
 const express = require('express')
 const router = express.Router()
-const data = require('../data.js')
-
-const { products } = data
+const productsDB = require('../db.json')
+const { products } = productsDB
+const updateDatabase = require('../modules/updateDatabase')
 
 router.get('/', (req, res) => {
-  res.json(products)
+  res.json(productsDB)
 })
 
 router.get('/:id', (req, res) => {
@@ -13,5 +13,20 @@ router.get('/:id', (req, res) => {
   const product = products.find(product => product.id === parseInt(id))
   res.json(product)
 })
+
+router.post('/', (req, res) => {
+  const body = req.body
+  productsDB.push(body)
+
+  const prodList = JSON.stringify(productsDB)
+
+  updateDatabase(prodList)
+
+  res.json({
+    message: 'created',
+    data: body
+  })
+})
+
 
 module.exports = router;

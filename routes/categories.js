@@ -12,4 +12,13 @@ router.get('/:id', (req, res) => {
   res.json(category)
 })
 
+router.post('/', (req, res) => {
+  const body = req.body
+  console.log('request', req)
+  res.json({
+    message: 'Category created successfully',
+    data: body
+  })
+})
+
 module.exports = router
