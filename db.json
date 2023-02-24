@@ -6,25 +6,21 @@
     "category": "accommodation"
   },
   {
-    "name": "product2",
-    "price": 2700,
-    "id": 2,
-    "category": "flights"
-  },
-  {
-    "name": "product3",
-    "price": 2900,
-    "id": 3,
-    "category": "accommodation"
-  },
-  {
     "name": "Product created by belen",
     "price": 23440,
+    "id": 3,
     "category": "accommodation"
   },
   {
     "name": "Other product",
     "price": 2700,
+    "id": 4,
     "category": "flights"
+  },
+  {
+    "name": "cool product",
+    "price": 2500,
+    "id": 5,
+    "category": "Beauty"
   }
 ]
