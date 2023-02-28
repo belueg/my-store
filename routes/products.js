@@ -10,17 +10,15 @@ router.get('/', (req, res) => {
   res.status(200).json(products)
 })
 
-router.get('/:id', (req, res) => {
+router.get('/:id', (req, res, next) => {
   const { id } = req.params
   try {
     const product = service.findOne(id)
     if (product) {
       res.status(200).json(product)
     }
-  } catch (error) {
-    res.status(404).json({
-      message: "no se encontro"
-    })
+  } catch (err) {
+    next(err)
   }
 })
 
