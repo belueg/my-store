@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const ProductsService = require('../services/products.services')
-
+const boom = require('@hapi/boom')
 const service = new ProductsService()
 
 // GET
@@ -14,9 +14,19 @@ router.get('/:id', (req, res, next) => {
   const { id } = req.params
   try {
     const product = service.findOne(id)
-    if (product) {
-      res.status(200).json(product)
+    const isPremium = req.body.isPremium
+
+    if (product && product.exclusivePremium) {
+      if (isPremium) {
+        return res.status(200).json(product)
+      }
+
+      if (!isPremium) {
+        throw new boom.conflict('conflict')
+      }
+
     }
+
   } catch (err) {
     next(err)
   }

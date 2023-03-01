@@ -1,6 +1,6 @@
 const express = require('express');
 const routerApi = require('./routes/index')
-const { logErrors } = require('./middlewares/errorHandlers')
+const { logErrors, errorHandler, boomErrorHandler } = require('./middlewares/errorHandlers')
 
 
 const app = express()
@@ -21,4 +21,6 @@ app.get('/', (req, res) => {
 
 //error middleware must be below routing definition
 app.use(logErrors)
+app.use(boomErrorHandler)
+app.use(errorHandler)
 
