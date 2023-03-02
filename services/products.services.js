@@ -23,6 +23,7 @@ class ProductsService {
   create(data) {
 
     const { name, category, price } = data
+    console.log(data)
     const newProduct = {
       name,
       category,

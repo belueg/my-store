@@ -3,6 +3,8 @@ const router = express.Router()
 const ProductsService = require('../services/products.services')
 const boom = require('@hapi/boom')
 const service = new ProductsService()
+const validatorHandler = require('../middlewares/validatorHandler')
+const { createProductSchema, getProductSchema, updateProductSchema } = require('../schemas/product.schema')
 
 // GET
 router.get('/', (req, res) => {
@@ -33,15 +35,22 @@ router.get('/:id', (req, res, next) => {
 })
 
 // POST
-router.post('/', (req, res) => {
-  const body = req.body
-  const product = service.create(body)
+router.post('/',
+  validatorHandler(createProductSchema, 'body'),
+  (req, res, next) => {
+    const body = req.body
+    try {
+      const product = service.create(body)
 
-  res.status(201).json({
-    message: 'created',
-    data: product
+      res.status(201).json({
+        message: 'created',
+        data: product
+      })
+    } catch (error) {
+      next(error)
+    }
+
   })
-})
 
 //PATCH
 router.patch('/:id', (req, res) => {
