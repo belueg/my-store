@@ -41,21 +41,13 @@ class ProductsService {
   }
 
   findOne(id) {
-    // const product = this.products.find(product => id === product.id);
+    const product = this.products.find(product => id === product.id);
 
-    // if (!product) {
-    //   throw new boom.notFound('product not found')
-    // }
-    // return product
-
-    const product = {
-      name: "Chicken",
-      price: "464.00",
-      category: "Movies",
-      id: "657d2a05-a432-4a6b-b5a5-5f7515905b4a",
-      exclusivePremium: true
+    if (!product) {
+      throw new boom.notFound('product not found')
     }
     return product
+
   }
 
   edit(data, id) {

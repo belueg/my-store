@@ -2,7 +2,7 @@ const Joi = require('joi');
 
 
 //fields
-const id = Joi.string().alphanum().guid()
+const id = Joi.string().guid()
 const name = Joi.string().min(3).max(20)
 const price = Joi.number().min(10).max(200000)
 const exclusivePremium = Joi.boolean()
@@ -18,11 +18,12 @@ const createProductSchema = Joi.object({
 const updateProductSchema = Joi.object({
   name,
   price,
+  category,
   exclusivePremium
 })
 
 const getProductSchema = Joi.object({
-  id
+  id: id.required()
 })
 
 module.exports = {

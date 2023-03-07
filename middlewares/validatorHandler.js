@@ -1,7 +1,6 @@
 const boom = require('@hapi/boom')
 
 function validatorHandler(schema, property) {
-  console.log('llega al middleware')
   return (req, res, next) => {
     const data = req[property]
 

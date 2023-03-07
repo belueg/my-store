@@ -7,30 +7,26 @@ const validatorHandler = require('../middlewares/validatorHandler')
 const { createProductSchema, getProductSchema, updateProductSchema } = require('../schemas/product.schema')
 
 // GET
-router.get('/', (req, res) => {
-  const products = service.find()
-  res.status(200).json(products)
+router.get('/', (req, res, next) => {
+  try {
+    const products = service.find()
+    res.status(200).json(products)
+  } catch (error) {
+    next(error)
+  }
+
 })
 
-router.get('/:id', (req, res, next) => {
+router.get('/:id', validatorHandler(getProductSchema, 'params'),(req, res, next) => {
   const { id } = req.params
   try {
     const product = service.findOne(id)
-    const isPremium = req.body.isPremium
 
-    if (product && product.exclusivePremium) {
-      if (isPremium) {
+    if (product) {
         return res.status(200).json(product)
-      }
-
-      if (!isPremium) {
-        throw new boom.conflict('conflict')
-      }
-
     }
-
-  } catch (err) {
-    next(err)
+  } catch (error) {
+    next(error)
   }
 })
 
@@ -53,7 +49,7 @@ router.post('/',
   })
 
 //PATCH
-router.patch('/:id', (req, res) => {
+router.patch('/:id', validatorHandler(updateProductSchema, 'body'),(req, res) => {
   const body = req.body
   const { id } = req.params
 
