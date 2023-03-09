@@ -14,13 +14,13 @@ router.get('/', (req, res, next) => {
   } catch (error) {
     next(error)
   }
-
 })
 
 router.get('/:id', validatorHandler(getProductSchema, 'params'), (req, res, next) => {
   const { id } = req.params
+  const { isPremium } = req.body
   try {
-    const product = service.findOne(id)
+    const product = service.findOne(id, isPremium)
 
     if (product) {
       return res.status(200).json(product)

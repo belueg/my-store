@@ -40,11 +40,19 @@ class ProductsService {
     return this.products
   }
 
-  findOne(id) {
+  findOne(id, isPremium) {
     const product = this.products.find(product => id === product.id);
 
     if (!product) {
       throw new boom.notFound('product not found')
+    }
+
+    if (product.exclusivePremium) {
+      if (isPremium) {
+        product
+      } else {
+        throw new boom.conflict('There is a conflict')
+      }
     }
     return product
 

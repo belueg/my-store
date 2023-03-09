@@ -1,6 +1,5 @@
 const express = require('express')
 const router = express.Router()
-const { faker } = require('@faker-js/faker');
 const UsersService = require('../services/users.services')
 const service = new UsersService()
 
@@ -74,7 +73,6 @@ router.delete('/:id', (req, res, next) => {
   } catch (error) {
     next(error)
   }
-
 
 })
 module.exports = router;
