@@ -68,7 +68,7 @@ router.patch('/:id', validatorHandler(updateProductSchema, 'body'), (req, res, n
 })
 
 //DELETE
-router.delete('/:id', (req, res) => {
+router.delete('/:id', (req, res, next) => {
   const { id } = req.params
 
   try {
@@ -80,11 +80,7 @@ router.delete('/:id', (req, res) => {
     })
 
   } catch (error) {
-    console.error(error)
-    res.status(404).json({
-      message: "Element not found",
-      id
-    })
+    next(error)
   }
 })
 

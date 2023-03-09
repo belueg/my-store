@@ -5,51 +5,78 @@ const UsersService = require('../services/users.services')
 const service = new UsersService()
 
 //GET USERS
-router.get('/', (req, res) => {
+router.get('/', (req, res, next) => {
   const { limit, offset } = req.query
-  const users = service.find(limit)
-  res.json({ users })
+
+  try {
+    const users = service.find(limit)
+    res.json({ users })
+  } catch (error) {
+    next(error)
+  }
+
 })
 
 //GET USER
-router.get('/:id', (req, res) => {
+router.get('/:id', (req, res, next) => {
   const { id } = req.params
 
-  const user = service.findOne(id)
-
-  if (user) {
+  try {
+    const user = service.findOne(id)
     res.status(200).json(user)
+
+  } catch (error) {
+    next(error)
   }
+
+
 })
 
 //CREATE USER
-router.post('/', (req, res) => {
+router.post('/', (req, res, next) => {
 
-  const newUser = service.create(req.body)
-  res.json({
-    message: 'user created successfully',
-    data: newUser
-  })
+  try {
+    const newUser = service.create(req.body)
+    res.json({
+      message: 'user created successfully',
+      data: newUser
+    })
+  } catch (error) {
+    next(error)
+  }
+
 })
 
 //UPDATE USER
-router.patch('/:id', (req, res) => {
+router.patch('/:id', (req, res, next) => {
   const { body } = req
   const { id } = req.params
-  const user = service.edit(body, id)
-  res.json({
-    message: 'user updated successfully',
-    data: user
-  })
+
+  try {
+    const user = service.edit(body, id)
+    res.json({
+      message: 'user updated successfully',
+      data: user
+    })
+  } catch (error) {
+    next(error)
+  }
+
 })
 
 //DELETE USER
-router.delete('/:id', (req, res) => {
+router.delete('/:id', (req, res, next) => {
   const { id } = req.params
-  const deleted = service.delete(id)
-  res.json({
-    message: 'user deleted successfully',
-    data: deleted
-  })
+  try {
+    const deleted = service.delete(id)
+    res.json({
+      message: 'user deleted successfully',
+      data: deleted
+    })
+  } catch (error) {
+    next(error)
+  }
+
+
 })
 module.exports = router;
