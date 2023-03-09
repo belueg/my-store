@@ -41,9 +41,11 @@ class UsersService {
   }
 
   edit(body, id) {
+    console.log('edit ~ body, id:', body, id)
     const userIndex = this.users.findIndex(user => user.id == id)
+    console.log('edit ~ userIndex:', userIndex)
 
-    if (!userIndex) {
+    if (userIndex === -1) {
       throw new boom.notFound('user not found')
     }
 

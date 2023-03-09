@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 const UsersService = require('../services/users.services')
 const service = new UsersService()
+const validadorHandler = require('../middlewares/validatorHandler')
+const { createUserSchema, getUserSchema, updateUserSchema } = require('../schemas/users.schema')
 
 //GET USERS
 router.get('/', (req, res, next) => {
@@ -17,7 +19,7 @@ router.get('/', (req, res, next) => {
 })
 
 //GET USER
-router.get('/:id', (req, res, next) => {
+router.get('/:id', validadorHandler(getUserSchema, 'params'), (req, res, next) => {
   const { id } = req.params
 
   try {
@@ -30,7 +32,7 @@ router.get('/:id', (req, res, next) => {
 })
 
 //CREATE USER
-router.post('/', (req, res, next) => {
+router.post('/', validadorHandler(createUserSchema, 'body'), (req, res, next) => {
 
   try {
     const newUser = service.create(req.body)
@@ -45,21 +47,24 @@ router.post('/', (req, res, next) => {
 })
 
 //UPDATE USER
-router.patch('/:id', (req, res, next) => {
-  const { body } = req
-  const { id } = req.params
+router.patch('/:id',
+  validadorHandler(getUserSchema, 'params'),
+  validadorHandler(updateUserSchema, 'body'),
+  (req, res, next) => {
+    const { body } = req
+    const { id } = req.params
 
-  try {
-    const user = service.edit(body, id)
-    res.json({
-      message: 'user updated successfully',
-      data: user
-    })
-  } catch (error) {
-    next(error)
-  }
+    try {
+      const user = service.edit(body, id)
+      res.json({
+        message: 'user updated successfully',
+        data: user
+      })
+    } catch (error) {
+      next(error)
+    }
 
-})
+  })
 
 //DELETE USER
 router.delete('/:id', (req, res, next) => {
