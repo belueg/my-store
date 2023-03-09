@@ -1,21 +1,13 @@
 const express = require('express')
 const router = express.Router()
 const { faker } = require('@faker-js/faker');
-
-const users = []
-
+const UsersService = require('../services/users.services')
+const service = new UsersService()
 
 //GET USERS
 router.get('/', (req, res) => {
   const { limit, offset } = req.query
-  const range = limit || 5
-  for (let i = 0; i < range; i++) {
-    users.push({
-      name: faker.name.fullName(),
-      email: faker.internet.email(),
-      id: faker.datatype.uuid()
-    })
-  }
+  const users = service.find(limit)
   res.json({ users })
 })
 
@@ -23,7 +15,7 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   const { id } = req.params
 
-  const user = users.find(user => user.id === id)
+  const user = service.findOne(id)
 
   if (user) {
     res.status(200).json(user)
@@ -32,31 +24,32 @@ router.get('/:id', (req, res) => {
 
 //CREATE USER
 router.post('/', (req, res) => {
-  const body = {
-    ...req.body,
-    id: faker.datatype.uuid()
-  }
 
+  const newUser = service.create(req.body)
   res.json({
-    message: 'user created succesfully',
-    data: body
+    message: 'user created successfully',
+    data: newUser
   })
 })
 
 //UPDATE USER
 router.patch('/:id', (req, res) => {
   const { body } = req
-  const userIndex = users.findIndex(user => user.id == req.params.id)
-  const userUpdated = users[userIndex] = {
-    ... users[userIndex],
-    ...body
-  }
-res.json(userUpdated)
+  const { id } = req.params
+  const user = service.edit(body, id)
+  res.json({
+    message: 'user updated successfully',
+    data: user
+  })
 })
 
 //DELETE USER
 router.delete('/:id', (req, res) => {
-  const { body } = req
-  console.log(body)
+  const { id } = req.params
+  const deleted = service.delete(id)
+  res.json({
+    message: 'user deleted successfully',
+    data: deleted
+  })
 })
 module.exports = router;

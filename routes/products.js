@@ -17,13 +17,13 @@ router.get('/', (req, res, next) => {
 
 })
 
-router.get('/:id', validatorHandler(getProductSchema, 'params'),(req, res, next) => {
+router.get('/:id', validatorHandler(getProductSchema, 'params'), (req, res, next) => {
   const { id } = req.params
   try {
     const product = service.findOne(id)
 
     if (product) {
-        return res.status(200).json(product)
+      return res.status(200).json(product)
     }
   } catch (error) {
     next(error)
@@ -49,16 +49,22 @@ router.post('/',
   })
 
 //PATCH
-router.patch('/:id', validatorHandler(updateProductSchema, 'body'),(req, res) => {
+router.patch('/:id', validatorHandler(updateProductSchema, 'body'), (req, res, next) => {
   const body = req.body
   const { id } = req.params
 
-  const productUpdated = service.edit(body, id)
 
-  res.status(200).json({
-    message: "successfuly updated",
-    data: productUpdated
-  })
+  try {
+    const productUpdated = service.edit(body, id)
+
+    res.status(200).json({
+      message: "successfully updated",
+      data: productUpdated
+    })
+
+  } catch (error) {
+    next(error)
+  }
 })
 
 //DELETE
@@ -69,7 +75,7 @@ router.delete('/:id', (req, res) => {
     service.delete(id)
 
     res.status(202).json({
-      message: "Element successfuly deleted",
+      message: "Element successfully deleted",
       id
     })
 
