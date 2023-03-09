@@ -28,8 +28,6 @@ router.get('/:id', (req, res, next) => {
   } catch (error) {
     next(error)
   }
-
-
 })
 
 //CREATE USER
