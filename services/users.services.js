@@ -8,8 +8,8 @@ class UsersService {
     this.generate()
   }
 
-  generate(limit) {
-    const range = limit || 5
+  generate() {
+    const range = 100
     for (let i = 0; i < range; i++) {
       this.users.push({
         name: faker.name.fullName(),
@@ -19,7 +19,11 @@ class UsersService {
     }
   }
 
-  find() {
+  find(limit) {
+    if (limit) {
+      const usersLimit = this.users.slice(0, limit)
+      return usersLimit
+    }
     return this.users
   }
 
