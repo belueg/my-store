@@ -62,9 +62,10 @@ class UsersService {
 
   delete(id) {
     const userIndex = this.users.findIndex(user => user.id == id)
-
-    if (!userIndex) {
-      throw new boom.notFound('user not found')
+    console.log(id)
+    console.log(userIndex)
+    if (userIndex === -1) {
+      throw new boom.notFound('product not found')
     }
 
     const deleteUser = this.users.splice(userIndex, 1)
