@@ -1,11 +1,21 @@
 const { faker } = require('@faker-js/faker');
 const boom = require('@hapi/boom');
+const getConnection = require('../libs/postgres')
 
 class ProductsService {
   products = []
   constructor() {
     this.generate()
   }
+
+
+  async find() {
+    const client = await getConnection()
+    const query = await client.query('SELECT * FROM tasks')
+
+    return query.rows
+  }
+
 
   generate() {
     for (let i = 0; i < 10; i++) {
@@ -34,10 +44,6 @@ class ProductsService {
 
     this.products.push(newProduct)
     return newProduct
-  }
-
-  find() {
-    return this.products
   }
 
   findOne(id, isPremium) {
