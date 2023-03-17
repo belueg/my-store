@@ -1,14 +1,18 @@
 const { faker } = require('@faker-js/faker');
 const boom = require('@hapi/boom');
+const pool = require('../libs/postgres.pool')
 
 class UsersService {
   users = []
 
   constructor() {
     this.generate()
+    this.pool = pool
+    this.pool.on('error', (error) => console.error(error))
   }
 
-  generate() {
+   generate() {
+
     const range = 100
     for (let i = 0; i < range; i++) {
       this.users.push({
@@ -19,12 +23,15 @@ class UsersService {
     }
   }
 
-  find(limit) {
-    if (limit) {
-      const usersLimit = this.users.slice(0, limit)
-      return usersLimit
-    }
-    return this.users
+  async find() {
+    // if (limit) {
+    //   const usersLimit = this.users.slice(0, limit)
+    //   return usersLimit
+    // }
+    const query = 'SELECT * FROM tasks'
+
+    const response = await this.pool.query(query)
+    return response.rows
   }
 
   findOne(id) {

@@ -6,11 +6,11 @@ const validadorHandler = require('../middlewares/validatorHandler')
 const { createUserSchema, getUserSchema, updateUserSchema } = require('../schemas/users.schema')
 
 //GET USERS
-router.get('/', (req, res, next) => {
+router.get('/', async (req, res, next) => {
   const { limit, offset } = req.query
 
   try {
-    const users = service.find(limit)
+    const users = await service.find()
     res.json({ users })
   } catch (error) {
     next(error)
