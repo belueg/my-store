@@ -3,11 +3,7 @@ const { Client } = require('pg')
 async function getConnection() {
   try {
     const client = new Client({
-      user: 'postgres',
-      host: 'localhost',
-      database: 'my_store',
-      password: 'admin123',
-      port: 5432,
+      connectionString: process.env.PG_CONNECTION_STRING
     })
     await client.connect()
 

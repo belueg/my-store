@@ -2,6 +2,7 @@ const { faker } = require('@faker-js/faker');
 const boom = require('@hapi/boom');
 const pool = require('../libs/postgres.pool')
 
+
 class UsersService {
   users = []
 
@@ -11,7 +12,7 @@ class UsersService {
     this.pool.on('error', (error) => console.error(error))
   }
 
-   generate() {
+  generate() {
 
     const range = 100
     for (let i = 0; i < range; i++) {

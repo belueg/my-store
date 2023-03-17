@@ -7,7 +7,6 @@ const { createUserSchema, getUserSchema, updateUserSchema } = require('../schema
 
 //GET USERS
 router.get('/', async (req, res, next) => {
-  const { limit, offset } = req.query
 
   try {
     const users = await service.find()
