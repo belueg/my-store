@@ -1,7 +1,7 @@
 const { faker } = require('@faker-js/faker');
 const boom = require('@hapi/boom');
 const getConnection = require('../libs/postgres')
-
+const sequelize = require('../libs/sequelize')
 class ProductsService {
   products = []
   constructor() {
@@ -10,10 +10,17 @@ class ProductsService {
 
 
   async find() {
-    const client = await getConnection()
-    const query = await client.query('SELECT * FROM tasks')
+    //client connection and query with PG
+    // const client = await getConnection()
+    // const query = await client.query('SELECT * FROM tasks')
+    // return query.rows
 
-    return query.rows
+    //example with sequalize
+    const query = 'SELECT * FROM tasks'
+
+    const response = await sequelize.query(query)
+
+    return response[0]
   }
 
 
