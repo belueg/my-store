@@ -1,6 +1,6 @@
 const { faker } = require('@faker-js/faker');
 const boom = require('@hapi/boom');
-const getConnection = require('../libs/postgres')
+// const getConnection = require('../libs/postgres')
 const sequelize = require('../libs/sequelize')
 class ProductsService {
   products = []
