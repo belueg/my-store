@@ -8,7 +8,8 @@ class CategoriesService {
 
 
   async find() {
-    const response = await models.User.findAll()
+    const response = await models.Category.findAll()
+    console.log(response)
     return response
   }
 

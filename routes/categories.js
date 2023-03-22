@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
-//const ProductsService = require('../services/products.services')
-//const service = new ProductsService()
+const CategoriesService = require('../services/categories.services')
+const service = new CategoriesService()
 const validatorHandler = require('../middlewares/validatorHandler')
 const { createCategorySchema, getCategorySchema, updateCategorySchema } = require('../schemas/category.schema')
 
@@ -9,7 +9,6 @@ const { createCategorySchema, getCategorySchema, updateCategorySchema } = requir
 router.get('/', async (req, res, next) => {
   try {
     const categories = await service.find()
-    console.log(categories)
     res.status(200).json(categories)
   } catch (error) {
     next(error)
