@@ -1,22 +1,8 @@
 const { Sequelize } = require('sequelize');
-
 const sequelize = new Sequelize(process.env.PG_CONNECTION_STRING)
+const setUpModel = require('../db/models')
 
-const User = sequelize.define('User', {
-  name: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-  email: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    unique: true
-  },
-  password: {
-    type: Sequelize.STRING,
-    allowNull: false
-  }
-});
+setUpModel(sequelize)
 
 sequelize.sync()
   .then(() => {

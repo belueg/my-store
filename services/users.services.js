@@ -1,27 +1,15 @@
 const { faker } = require('@faker-js/faker');
 const boom = require('@hapi/boom');
-const pool = require('../libs/postgres.pool')
+// const pool = require('../libs/postgres.pool')
+const { models } = require('../libs/sequelize')
 
 
 class UsersService {
   users = []
 
   constructor() {
-    this.generate()
-    this.pool = pool
-    this.pool.on('error', (error) => console.error(error))
-  }
-
-  generate() {
-
-    const range = 100
-    for (let i = 0; i < range; i++) {
-      this.users.push({
-        name: faker.name.fullName(),
-        email: faker.internet.email(),
-        id: faker.datatype.uuid()
-      })
-    }
+    // this.pool = pool
+    // this.pool.on('error', (error) => console.error(error))
   }
 
   async find() {
@@ -29,10 +17,14 @@ class UsersService {
     //   const usersLimit = this.users.slice(0, limit)
     //   return usersLimit
     // }
-    const query = 'SELECT * FROM tasks'
+    //Consulta a traves de pg pool.
+    // const query = 'SELECT * FROM tasks'
 
-    const response = await this.pool.query(query)
-    return response.rows
+    // const response = await this.pool.query(query)
+    // return response.rows
+    const response = await models.User.findAll()
+    return response
+
   }
 
   findOne(id) {
