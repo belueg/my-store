@@ -18,9 +18,8 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', validatorHandler(getCategorySchema, 'params'), (req, res, next) => {
   const { id } = req.params
-  const { isPremium } = req.body
   try {
-    const category = service.findOne(id, isPremium)
+    const category = service.findOne(id)
 
     if (category) {
       return res.status(200).json(category)
