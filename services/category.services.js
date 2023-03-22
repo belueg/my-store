@@ -30,9 +30,7 @@ class CategoriesService {
   }
 
   edit(body, id) {
-    console.log('edit ~ body, id:', body, id)
     const categoryIndex = this.categories.findIndex(category => category.id == id)
-    console.log('edit ~ categoryIndex:', categoryIndex)
 
     if (categoryIndex === -1) {
       throw new boom.notFound('category not found')
