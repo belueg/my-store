@@ -12,8 +12,15 @@ function boomErrorHandler(err, req, res, next) {
   next(err)
 }
 
+function validationError(err, req, res, next) {
+  if (err.name == 'SequelizeUniqueConstraintError') {
+    return res.status(409).json({
+      error: 'Email already exists'
+    })
+  }
+  next(err)
+}
 function errorHandler(err, req, res, next) {
-  console.log(err)
   res.status(500).json({
     error: 'Hubo un problema'
   })
@@ -23,5 +30,6 @@ function errorHandler(err, req, res, next) {
 module.exports = {
   logErrors,
   errorHandler,
-  boomErrorHandler
+  boomErrorHandler,
+  validationError
 }

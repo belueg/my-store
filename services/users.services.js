@@ -1,5 +1,6 @@
 const { faker } = require('@faker-js/faker');
 const boom = require('@hapi/boom');
+const { CommandCompleteMessage } = require('pg-protocol/dist/messages');
 // const pool = require('../libs/postgres.pool')
 const { models } = require('../libs/sequelize')
 
@@ -13,34 +14,23 @@ class UsersService {
   }
 
   async find() {
-    // if (limit) {
-    //   const usersLimit = this.users.slice(0, limit)
-    //   return usersLimit
-    // }
-    //Consulta a traves de pg pool.
-    // const query = 'SELECT * FROM tasks'
-
-    // const response = await this.pool.query(query)
-    // return response.rows
     const response = await models.User.findAll()
     return response
 
   }
 
-  findOne(id) {
-    const user = this.users.find(user => user.id === id)
-
+  async findOne(id) {
+    console.log(id)
+    const user = await models.User.findByPk(id)
+    console.log(user)
     if (!user) {
       throw new boom.notFound('user not found')
     }
     return user
   }
 
-  create(body) {
-    const newUser = {
-      ...body,
-      id: faker.datatype.uuid()
-    }
+  async create(data) {
+    const newUser = await models.User.create(data);
     return newUser
   }
 

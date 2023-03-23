@@ -1,7 +1,7 @@
 require('dotenv').config()
 const express = require('express');
 const routerApi = require('./routes/index')
-const { logErrors, errorHandler, boomErrorHandler } = require('./middlewares/errorHandlers')
+const { logErrors, errorHandler, boomErrorHandler, validationError } = require('./middlewares/errorHandlers')
 
 
 const app = express()
@@ -17,11 +17,12 @@ app.listen(port, () => {
 })
 
 app.get('/', (req, res) => {
-  res.send("Hola bella")
+  res.send("Hola")
 })
 
-//error middleware must be below routing definition
+//error middleware must be below routing definition and order between them is important
 app.use(logErrors)
 app.use(boomErrorHandler)
+app.use(validationError)
 app.use(errorHandler)
 

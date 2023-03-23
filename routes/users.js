@@ -18,11 +18,11 @@ router.get('/', async (req, res, next) => {
 })
 
 //GET USER
-router.get('/:id', validadorHandler(getUserSchema, 'params'), (req, res, next) => {
+router.get('/:id', validadorHandler(getUserSchema, 'params'), async (req, res, next) => {
   const { id } = req.params
 
   try {
-    const user = service.findOne(id)
+    const user = await service.findOne(id)
     res.status(200).json(user)
 
   } catch (error) {
@@ -31,10 +31,9 @@ router.get('/:id', validadorHandler(getUserSchema, 'params'), (req, res, next) =
 })
 
 //CREATE USER
-router.post('/', validadorHandler(createUserSchema, 'body'), (req, res, next) => {
-
+router.post('/', validadorHandler(createUserSchema, 'body'), async (req, res, next) => {
   try {
-    const newUser = service.create(req.body)
+    const newUser = await service.create(req.body)
     res.json({
       message: 'user created successfully',
       data: newUser
@@ -42,7 +41,6 @@ router.post('/', validadorHandler(createUserSchema, 'body'), (req, res, next) =>
   } catch (error) {
     next(error)
   }
-
 })
 
 //UPDATE USER
