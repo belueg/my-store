@@ -34,31 +34,24 @@ class UsersService {
     return newUser
   }
 
-  edit(body, id) {
-    console.log('edit ~ body, id:', body, id)
-    const userIndex = this.users.findIndex(user => user.id == id)
-    console.log('edit ~ userIndex:', userIndex)
+  async edit(body, id) {
+    const user = await this.findOne(id)
 
-    if (userIndex === -1) {
+    if (!user) {
       throw new boom.notFound('user not found')
     }
 
-    const userUpdated = this.users[userIndex] = {
-      ...this.users[userIndex],
-      ...body
-    }
-    return userUpdated
+    return await user.update(body)
   }
 
-  delete(id) {
-    const userIndex = this.users.findIndex(user => user.id == id)
+  async delete(id) {
+    const user = await this.findOne(id)
 
-    if (!userIndex) {
+    if (!user) {
       throw new boom.notFound('user not found')
     }
-
-    const deleteUser = this.users.splice(userIndex, 1)
-    return deleteUser
+    await user.destroy()
+    return id
   }
 }
 
