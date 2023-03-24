@@ -2,7 +2,7 @@ const Joi = require('joi');
 
 
 //fields
-const id = Joi.string().guid()
+const id = Joi.number()
 const name = Joi.string().min(3).max(20)
 const price = Joi.number().min(10).max(200000)
 const exclusivePremium = Joi.boolean()
