@@ -1,4 +1,4 @@
-const { Sequelize } = require('sequelize');
+const { Sequelize, DataTypes } = require('sequelize');
 
 const userSchema =  {
   name: {
@@ -13,7 +13,17 @@ const userSchema =  {
   password: {
     type: Sequelize.STRING,
     allowNull: false
-  }
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+    allowNull: false,
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+    allowNull: false,
+  },
 }
 
 module.exports = userSchema;
