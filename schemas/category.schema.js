@@ -2,7 +2,7 @@ const Joi = require('joi');
 
 
 //fields
-const id = Joi.string().guid()
+const id = Joi.number()
 const name = Joi.string().min(3).max(20)
 
 const createCategorySchema = Joi.object({
@@ -10,7 +10,7 @@ const createCategorySchema = Joi.object({
 })
 
 const updateCategorySchema = Joi.object({
-  name,
+  name: name.required(),
 })
 
 const getCategorySchema = Joi.object({

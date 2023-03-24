@@ -15,10 +15,10 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:id', validatorHandler(getCategorySchema, 'params'), (req, res, next) => {
+router.get('/:id', validatorHandler(getCategorySchema, 'params'), async (req, res, next) => {
   const { id } = req.params
   try {
-    const category = service.findOne(id)
+    const category = await service.findOne(id)
 
     if (category) {
       return res.status(200).json(category)
@@ -31,10 +31,10 @@ router.get('/:id', validatorHandler(getCategorySchema, 'params'), (req, res, nex
 // POST
 router.post('/',
   validatorHandler(createCategorySchema, 'body'),
-  (req, res, next) => {
+  async (req, res, next) => {
     const body = req.body
     try {
-      const category = service.create(body)
+      const category = await service.create(body)
 
       res.status(201).json({
         message: 'created',
@@ -47,39 +47,40 @@ router.post('/',
   })
 
 //PATCH
-router.patch('/:id', validatorHandler(updateCategorySchema, 'body'), (req, res, next) => {
-  const body = req.body
-  const { id } = req.params
+router.patch('/:id', validatorHandler(getCategorySchema, 'params'),
+  validatorHandler(updateCategorySchema, 'body'),
+  async (req, res, next) => {
+    const body = req.body
+    const { id } = req.params
 
 
-  try {
-    const categoryUpdated = service.edit(body, id)
+    try {
+      const categoryUpdated = await service.edit(body, id)
+      res.status(200).json({
+        message: "successfully updated",
+        data: categoryUpdated
+      })
 
-    res.status(200).json({
-      message: "successfully updated",
-      data: categoryUpdated
-    })
-
-  } catch (error) {
-    next(error)
-  }
-})
+    } catch (error) {
+      next(error)
+    }
+  })
 
 //DELETE
-router.delete('/:id', (req, res, next) => {
-  const { id } = req.params
+router.delete('/:id', validatorHandler(getCategorySchema, 'params'),
+  async (req, res, next) => {
+    const { id } = req.params
 
-  try {
-    service.delete(id)
+    try {
+      await service.delete(id)
+      res.status(202).json({
+        message: "Element successfully deleted",
+        id
+      })
 
-    res.status(202).json({
-      message: "Element successfully deleted",
-      id
-    })
-
-  } catch (error) {
-    next(error)
-  }
-})
+    } catch (error) {
+      next(error)
+    }
+  })
 
 module.exports = router;
