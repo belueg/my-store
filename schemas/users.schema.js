@@ -4,12 +4,13 @@ const id = Joi.string()
 const name = Joi.string().min(2).max(30)
 const email = Joi.string().email()
 const password = Joi.string()
+const role = Joi.string()
 
 const createUserSchema = Joi.object({
   name: name.required(),
   email: email.required(),
   password: password.required(),
-
+  role
 })
 
 const getUserSchema = Joi.object({

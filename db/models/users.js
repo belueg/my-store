@@ -1,6 +1,12 @@
 const { Sequelize, DataTypes } = require('sequelize');
 
-const userSchema =  {
+const userSchema = {
+  id: {
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true,
+    type: DataTypes.INTEGER
+  },
   name: {
     type: Sequelize.STRING,
     allowNull: false
@@ -9,6 +15,12 @@ const userSchema =  {
     type: Sequelize.STRING,
     allowNull: false,
     unique: true
+  },
+  role: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: 'customer',
+
   },
   password: {
     type: Sequelize.STRING,
