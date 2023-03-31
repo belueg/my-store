@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize');
 
-const userSchema = {
+const customerSchema = {
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -12,31 +12,37 @@ const userSchema = {
     type: Sequelize.STRING,
     allowNull: false
   },
-  email: {
+  lastName: {
     type: Sequelize.STRING,
     allowNull: false,
-    unique: true
+    field: 'last_name'
   },
-  role: {
+  phone: {
     type: Sequelize.STRING,
     allowNull: false,
-    defaultValue: 'customer',
-
-  },
-  password: {
-    type: Sequelize.STRING,
-    allowNull: false
   },
   createdAt: {
     type: DataTypes.DATE,
+    field: 'created_at',
     defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
     allowNull: false,
   },
   updatedAt: {
     type: DataTypes.DATE,
+    field: 'updated_at',
     defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
     allowNull: false,
   },
+  userId: {
+    field: 'user_id',
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    references: {
+      model: 'Users',
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: "SET NULL"
+  }
 }
-
-module.exports = userSchema;
+module.exports = customerSchema;
