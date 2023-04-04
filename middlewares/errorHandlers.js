@@ -15,7 +15,7 @@ function boomErrorHandler(err, req, res, next) {
 function validationError(err, req, res, next) {
   if (err.name == 'SequelizeUniqueConstraintError') {
     return res.status(409).json({
-      error: 'Email already exists'
+      error: err.errors
     })
   }
   next(err)
