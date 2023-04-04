@@ -1,19 +1,19 @@
 <script setup>
 import { ref } from 'vue'
 
-const menuItems = ref(['Remeras', 'Vestidos', 'Pantalones'])
+const menuItems = ref([{ name: 'Remeras', id: 1 }, { name: 'Vestidos', id: 2 }, { name: 'Pantalones', id: 3 }])
 
 </script>
 
 <template>
   <div class="nav">
-    <RouterLink to="/" >Brand</RouterLink>
+    <RouterLink to="/">Brand</RouterLink>
     <div class="nav__list">
       <ul class="nav__list--items">
-        <!-- Reemplazar  <li> por routerLink -->
-        <li class="nav__list--item" v-for="item in menuItems">
-          {{ item }}
-        </li>
+        <RouterLink :to="{ name: 'clothes', params: { id: item.id } }" class="nav__list--item" v-for="item in menuItems">
+          {{ item.name }}
+        </RouterLink>
+        <li class="nav__list--item">Login</li>
       </ul>
     </div>
   </div>
@@ -32,15 +32,13 @@ const menuItems = ref(['Remeras', 'Vestidos', 'Pantalones'])
     width: 50%;
 
     &--items {
-      width: 100%;
       display: flex;
       justify-content: space-around;
     }
 
-    &--item{
+    &--item {
       list-style-type: none;
     }
   }
 }
-
 </style>

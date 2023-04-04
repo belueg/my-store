@@ -12,11 +12,18 @@ const router = createRouter({
     {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue')
-    }
+    },
+    {
+      path: '/clothes/:id',
+      name: 'clothes',
+      component: () => import('@/views/Clothes.vue'),
+      // beforeEnter: (to, from) => {
+      //     // Checks if ID passed from client is equal to any other in the 'database'
+      //     const exists = destinations.find(destination => destination.id === parseInt(to.params.id))
+      //     if (!exists) return { name: 'NotFound' }
+      // },
+  },
   ]
 })
 
