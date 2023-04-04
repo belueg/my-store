@@ -1,7 +1,7 @@
 const categorySchema = require('./category')
 const productSchema = require('./products')
 const userSchema = require('./users')
-const  customerSchema  = require('./customers')
+const customerSchema = require('./customers')
 
 
 function setUpModel(sequelize) {
@@ -11,8 +11,10 @@ function setUpModel(sequelize) {
   const Customer = sequelize.define('Customer', customerSchema)
 
   Customer.belongsTo(User, {
-    foreignKey: 'user_id'
-  });}
+    foreignKey: 'user_id',
+    as: 'users'
+  });
+}
 
 
 
