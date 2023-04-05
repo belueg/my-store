@@ -20,7 +20,8 @@ const getCustomerSchema = Joi.object({
 
 const updateCustomerSchema = Joi.object({
   name,
-  email
+  lastName,
+  phone
 })
 
 module.exports = {

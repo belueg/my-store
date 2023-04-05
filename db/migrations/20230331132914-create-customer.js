@@ -1,5 +1,4 @@
 const customerSchema = require('../models/customers')
-const userSchema = require('../models/users')
 
 'use strict';
 

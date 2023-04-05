@@ -1,4 +1,4 @@
-const categorySchema = require('./category')
+const categorySchema = require('./categories')
 const productSchema = require('./products')
 const userSchema = require('./users')
 const customerSchema = require('./customers')

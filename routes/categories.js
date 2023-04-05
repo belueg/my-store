@@ -35,7 +35,6 @@ router.post('/',
     const body = req.body
     try {
       const category = await service.create(body)
-
       res.status(201).json({
         message: 'created',
         data: category
@@ -74,7 +73,7 @@ router.delete('/:id', validatorHandler(getCategorySchema, 'params'),
     try {
       await service.delete(id)
       res.status(202).json({
-        message: "Element successfully deleted",
+        message: "Category successfully deleted",
         id
       })
 
