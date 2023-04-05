@@ -1,6 +1,8 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
 import TheNavBar from './components/layout/TheNavBar.vue';
+import { useRoute } from 'vue-router'
+const route = useRoute()
 </script>
 
 <template>
@@ -8,8 +10,7 @@ import TheNavBar from './components/layout/TheNavBar.vue';
     <TheNavBar />
   </header>
 
-  <RouterView />
+  <RouterView :key="route.path" />
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

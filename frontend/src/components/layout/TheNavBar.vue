@@ -1,7 +1,16 @@
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import axios from 'axios'
+const menuItems = ref([])
 
-const menuItems = ref([{ name: 'Remeras', id: 1 }, { name: 'Vestidos', id: 2 }, { name: 'Pantalones', id: 3 }])
+onMounted(async () => {
+  try {
+    const { data } = await axios.get('http://localhost:3001/api/categories')
+    menuItems.value = data
+  } catch (error) {
+    console.error(error)
+  }
+})
 
 </script>
 
