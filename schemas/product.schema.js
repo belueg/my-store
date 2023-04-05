@@ -6,19 +6,19 @@ const id = Joi.number()
 const name = Joi.string().min(3).max(20)
 const price = Joi.number().min(10).max(200000)
 const exclusivePremium = Joi.boolean()
-const category = Joi.string()
+const categoryId = Joi.number().integer()
 
 const createProductSchema = Joi.object({
   name: name.required(),
   price: price.required(),
-  category: category.required(),
+  categoryId: categoryId.required(),
   exclusivePremium
 })
 
 const updateProductSchema = Joi.object({
   name,
   price,
-  category,
+  categoryId,
   exclusivePremium
 })
 

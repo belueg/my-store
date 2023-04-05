@@ -12,8 +12,15 @@ function setUpModel(sequelize) {
 
   Customer.belongsTo(User, {
     foreignKey: 'user_id',
-    as: 'users'
+    as: 'user'
   });
+
+  Category.hasMany(Product, {
+    as: 'products',
+    foreignKey: 'category_id'
+  })
+
+  Product.belongsTo(Category, { as: 'category' })
 }
 
 

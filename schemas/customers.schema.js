@@ -6,12 +6,16 @@ const lastName = Joi.string().min(2).max(40)
 const email = Joi.string().email()
 const phone = Joi.string()
 const userId = Joi.number().integer()
+const password = Joi.string().min(6).max(30)
 
 const createCustomerSchema = Joi.object({
   name: name.required(),
   lastName: lastName.required(),
   phone: phone.required(),
-  userId: userId.required()
+  user: Joi.object({
+    email: email.required(),
+    password: password.required(),
+  })
 })
 
 const getCustomerSchema = Joi.object({
@@ -21,7 +25,8 @@ const getCustomerSchema = Joi.object({
 const updateCustomerSchema = Joi.object({
   name,
   lastName,
-  phone
+  phone,
+  userId
 })
 
 module.exports = {

@@ -8,10 +8,6 @@ const userSchema = {
     primaryKey: true,
     type: DataTypes.INTEGER
   },
-  name: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
   email: {
     type: Sequelize.STRING,
     allowNull: false,
