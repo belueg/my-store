@@ -5,7 +5,13 @@ const { models } = require('../libs/sequelize')
 class OrdersServices {
 
   async find() {
-    const orders = await models.Order.findAll()
+    const orders = await models.Order.findAll({
+      //nested associations
+      include: [{
+        association: 'customer',
+        include: ['user']
+      }]
+    })
     return orders
   }
 
