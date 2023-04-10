@@ -3,7 +3,7 @@ const productSchema = require('./products')
 const userSchema = require('./users')
 const customerSchema = require('./customers')
 const orderSchema = require('./orders')
-
+const orderProductSchema = require('./order-product.js')
 
 function setUpModel(sequelize) {
   const User = sequelize.define('User', userSchema)
@@ -11,6 +11,7 @@ function setUpModel(sequelize) {
   const Category = sequelize.define('Category', categorySchema)
   const Customer = sequelize.define('Customer', customerSchema)
   const Order = sequelize.define('Order', orderSchema)
+  const OrderProduct = sequelize.define('OrderProduct', orderProductSchema)
 
   Customer.belongsTo(User, {
     foreignKey: 'user_id',
@@ -31,6 +32,13 @@ function setUpModel(sequelize) {
 
   Order.belongsTo(Customer, {
     as: 'customer'
+  })
+
+  Order.belongsToMany(Product, {
+    through: OrderProduct,
+    as: 'items',
+    foreignKey: 'order_id',
+    otherKey: 'product_id'
   })
 }
 
