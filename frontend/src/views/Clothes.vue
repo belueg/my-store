@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import { useRoute } from 'vue-router';
+import ProductBox from '../components/ProductCard.vue';
 
 const clothes = ref([])
 const route = useRoute();
@@ -18,6 +19,30 @@ onMounted(async () => {
 </script>
 
 <template>
-  <h1>clothes view {{ clothes.name }}</h1>
-  <div v-for="clothe in clothes.products">{{ clothe.name }}</div>
+  <div class="container">
+    <h1> {{ clothes.name }}</h1>
+    <div class="cardContainer">
+      <ProductBox v-for="item in clothes.products" :product="item" />
+    </div>
+  </div>
 </template>
+
+<style scoped>
+.container {
+  margin: 0 auto;
+  width: 80%;
+  text-align: center;
+}
+
+.cardContainer {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>

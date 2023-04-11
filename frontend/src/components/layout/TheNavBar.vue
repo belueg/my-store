@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import axios from 'axios'
 const menuItems = ref([])
 
@@ -11,7 +11,16 @@ onMounted(async () => {
     console.error(error)
   }
 })
+const categories = computed(() => {
+  return menuItems.value.map((category) => {
+    const slug = category.name.toLowerCase()
 
+    return {
+      ...category,
+      slug
+    }
+  })
+})
 </script>
 
 <template>
@@ -19,7 +28,8 @@ onMounted(async () => {
     <RouterLink to="/">Brand</RouterLink>
     <div class="nav__list">
       <ul class="nav__list--items">
-        <RouterLink :to="{ name: 'clothes', params: { id: item.id } }" class="nav__list--item" v-for="item in menuItems">
+        <RouterLink :to="{ name: 'clothes', params: { id: item.id, slug: item.slug } }" class="nav__list--item"
+          v-for="item in categories">
           {{ item.name }}
         </RouterLink>
         <li class="nav__list--item">Login</li>
