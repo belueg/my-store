@@ -11,7 +11,9 @@ function setUpModel(sequelize) {
   const Category = sequelize.define('Category', categorySchema)
   const Customer = sequelize.define('Customer', customerSchema)
   const Order = sequelize.define('Order', orderSchema)
-  const OrderProduct = sequelize.define('OrderProduct', orderProductSchema)
+  const OrderProduct = sequelize.define('OrderProduct', orderProductSchema, {
+    tableName: 'OrderProduct'
+  })
 
   Customer.belongsTo(User, {
     foreignKey: 'user_id',
@@ -35,13 +37,18 @@ function setUpModel(sequelize) {
   })
 
   Order.belongsToMany(Product, {
-    through: OrderProduct,
-    as: 'items',
+    through: OrderProduct, as: 'items',
     foreignKey: 'order_id',
     otherKey: 'product_id'
-  })
-}
+  });
 
+  Product.belongsToMany(Order, {
+    through: OrderProduct, as: 'items',
+    foreignKey: 'order_id',
+    otherKey: 'product_id'
+  });
+
+}
 
 
 module.exports = setUpModel
