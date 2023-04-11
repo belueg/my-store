@@ -8,6 +8,10 @@ const orderProductSchema = {
     primaryKey: true,
     type: Sequelize.INTEGER
   },
+  amount: {
+    allowNull: false,
+    type: Sequelize.INTEGER
+  },
   createdAt: {
     type: DataTypes.DATE,
     field: 'created_at',
