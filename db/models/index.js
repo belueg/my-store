@@ -37,15 +37,17 @@ function setUpModel(sequelize) {
   })
 
   Order.belongsToMany(Product, {
-    through: OrderProduct, as: 'items',
+    through: OrderProduct,
+    as: 'items',
     foreignKey: 'order_id',
     otherKey: 'product_id'
   });
 
   Product.belongsToMany(Order, {
-    through: OrderProduct, as: 'items',
-    foreignKey: 'order_id',
-    otherKey: 'product_id'
+    through: OrderProduct,
+    as: 'items',
+    foreignKey: 'product_id',
+    otherKey: 'order_id'
   });
 
 }

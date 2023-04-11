@@ -20,6 +20,9 @@ const productSchema = {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },
+  image: {
+    type: Sequelize.STRING
+  },
   createdAt: {
     type: DataTypes.DATE,
     field: 'created_at',
