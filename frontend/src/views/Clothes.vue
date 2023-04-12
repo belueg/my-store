@@ -7,7 +7,6 @@ import ProductBox from '../components/ProductCard.vue';
 const clothes = ref([])
 const route = useRoute();
 
-console.log(route.params.id)
 async function getClothes(id) {
   const { data } = await axios.get(`http://localhost:3001/api/categories/${id}`)
   clothes.value = data

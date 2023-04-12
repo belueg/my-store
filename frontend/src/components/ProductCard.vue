@@ -1,11 +1,20 @@
 <script setup>
-defineProps({
+import { computed } from 'vue'
+
+const props = defineProps({
   product: {
     type: Object,
     required: true
   },
 
 })
+
+const productSlug = computed(() => {
+  const lowerName = props.product.name.toLowerCase()
+  const slug = lowerName.split(" ").join("-")
+  return slug
+})
+
 </script>
 
 <template>
