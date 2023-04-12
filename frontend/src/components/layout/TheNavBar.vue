@@ -25,7 +25,7 @@ const categories = computed(() => {
 
 <template>
   <div class="nav">
-    <RouterLink to="/">Brand</RouterLink>
+    <RouterLink to="/">Tienda online</RouterLink>
     <div class="nav__list">
       <ul class="nav__list--items">
         <RouterLink :to="{ name: 'clothes', params: { id: item.id, slug: item.slug } }" class="nav__list--item"
@@ -40,12 +40,17 @@ const categories = computed(() => {
 
 <style lang="scss">
 .nav {
-  background-color: aquamarine;
-  color: black;
+  background-color: black;
+  color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
 
   &__list {
     width: 50%;
