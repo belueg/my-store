@@ -18,11 +18,15 @@ const productSlug = computed(() => {
 </script>
 
 <template>
-  <div class="product-card">
-    <h2 class="product-card__title">{{ product.name }}</h2>
-    <img class="product-card__image" :src="`${product.image}`" />
-    <span class="product-card__price">{{ product.price }}</span>
-  </div>
+  <RouterLink :to="{
+    name: 'product', params: { productId: product.id, productSlug }
+  }">
+    <div class="product-card">
+      <h2 class="product-card__title">{{ product.name }}</h2>
+      <img class="product-card__image" :src="`${product.image}`" />
+      <span class="product-card__price">{{ product.price }}</span>
+    </div>
+  </RouterLink>
 </template>
 
 <style scoped>
