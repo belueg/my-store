@@ -17,6 +17,12 @@ const customerSchema = {
     allowNull: false,
     field: 'last_name'
   },
+  fullName: {
+    type: DataTypes.VIRTUAL,
+    get() {
+      return `${this.name} ${this.lastName}`;
+    }
+  },
   phone: {
     type: Sequelize.STRING,
     allowNull: false,
