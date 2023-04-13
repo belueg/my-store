@@ -15,6 +15,11 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue')
     },
     {
+      path: '/cart',
+      name: 'cart',
+      component: () => import('@/views/Cart.vue'),
+    },
+    {
       path: '/clothes/:id/:slug',
       name: 'clothes',
       component: () => import('@/views/Clothes.vue'),
@@ -23,17 +28,12 @@ const router = createRouter({
       //     const exists = destinations.find(destination => destination.id === parseInt(to.params.id))
       //     if (!exists) return { name: 'NotFound' }
       // },
-  },
-  {
-    path: '/clothes/:id/:slug/:productId/:productSlug',
-    name: 'product',
-    component: () => import('@/views/Product.vue'),
-    // beforeEnter: (to, from) => {
-    //     // Checks if ID passed from client is equal to any other in the 'database'
-    //     const exists = destinations.find(destination => destination.id === parseInt(to.params.id))
-    //     if (!exists) return { name: 'NotFound' }
-    // },
-},
+    },
+    {
+      path: '/clothes/:id/:slug/:productId/:productSlug',
+      name: 'product',
+      component: () => import('@/views/Product.vue'),
+    },
   ]
 })
 

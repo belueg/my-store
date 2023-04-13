@@ -1,7 +1,10 @@
 <script setup>
+import { useCartStore } from '../../stores/useCartStore';
 import { onMounted, ref, computed } from 'vue'
 import axios from 'axios'
 const menuItems = ref([])
+
+const cartStore = useCartStore()
 
 onMounted(async () => {
   try {
@@ -33,6 +36,8 @@ const categories = computed(() => {
           {{ item.name }}
         </RouterLink>
         <li class="nav__list--item">Login</li>
+        <RouterLink :to="{ name: 'cart' }">Cart <span class="nav__cart--count"> {{ cartStore.cartCount }}</span>
+        </RouterLink>
       </ul>
     </div>
   </div>
@@ -63,6 +68,14 @@ const categories = computed(() => {
     &--item {
       list-style-type: none;
     }
+  }
+
+  &__cart--count{
+    color: black;
+    font-weight: 700;
+    background-color: white;
+    padding: 0px 5px;
+    border-radius: 50%;
   }
 }
 </style>
