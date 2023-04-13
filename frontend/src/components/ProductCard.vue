@@ -18,15 +18,14 @@ const productSlug = computed(() => {
 </script>
 
 <template>
-  <RouterLink :to="{
-    name: 'product', params: { productId: product.id, productSlug }
-  }">
-    <div class="product-card">
-      <h2 class="product-card__title">{{ product.name }}</h2>
-      <img class="product-card__image" :src="`${product.image}`" />
-      <span class="product-card__price">{{ product.price }}</span>
-    </div>
-  </RouterLink>
+  <div class="product-card">
+
+    <h2 class="product-card__title">{{ product.name }}</h2>
+    <img class="product-card__image" :src="`${product.image}`" />
+    <RouterLink :to="{
+      name: 'product', params: { productId: product.id, productSlug }
+    }">+ info</RouterLink>
+  </div>
 </template>
 
 <style scoped>
@@ -42,6 +41,7 @@ const productSlug = computed(() => {
   margin: 10px;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .product-card:hover {
@@ -53,6 +53,7 @@ const productSlug = computed(() => {
 .product-card__title {
   font-size: 1.2rem;
   margin-bottom: 1rem;
+  color: black;
 }
 
 .product-card__image {
