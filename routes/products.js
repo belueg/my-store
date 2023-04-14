@@ -4,17 +4,19 @@ const ProductsService = require('../services/products.services')
 const boom = require('@hapi/boom')
 const service = new ProductsService()
 const validatorHandler = require('../middlewares/validatorHandler')
-const { createProductSchema, getProductSchema, updateProductSchema } = require('../schemas/product.schema')
+const { createProductSchema, getProductSchema, updateProductSchema, queryProductSchema } = require('../schemas/product.schema')
 
 // GET
-router.get('/', async (req, res, next) => {
-  try {
-    const products = await service.find()
-    res.status(200).json(products)
-  } catch (error) {
-    next(error)
-  }
-})
+router.get('/',
+  validatorHandler(queryProductSchema, 'query'),
+  async (req, res, next) => {
+    try {
+      const products = await service.find(req.query)
+      res.status(200).json(products)
+    } catch (error) {
+      next(error)
+    }
+  })
 
 router.get('/:id', validatorHandler(getProductSchema, 'params'), async (req, res, next) => {
   const { id } = req.params
