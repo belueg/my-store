@@ -33,7 +33,9 @@ const productCart = computed(() => {
 
 
 function addToCartProduct(productCart) {
-  store.addToCart(productCart)
+  if (amount.value > 0) {
+    store.addToCart(productCart)
+  }
   amount.value = 0
 }
 </script>
