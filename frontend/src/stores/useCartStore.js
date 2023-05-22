@@ -9,5 +9,7 @@ export const useCartStore = defineStore('cart', () => {
   }
 
   const cartCount = computed(() => cart.value.length)
+
+
   return { cart, addToCart, cartCount }
 })
