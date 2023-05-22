@@ -18,18 +18,20 @@ router.get('/',
     }
   })
 
-router.get('/:id', validatorHandler(getProductSchema, 'params'), async (req, res, next) => {
-  const { id } = req.params
-  try {
-    const product = await service.findOne(id)
+router.get('/:id',
+  validatorHandler(getProductSchema, 'params'),
+  async (req, res, next) => {
+    const { id } = req.params
+    try {
+      const product = await service.findOne(id)
 
-    if (product) {
-      return res.status(200).json(product)
+      if (product) {
+        return res.status(200).json(product)
+      }
+    } catch (error) {
+      next(error)
     }
-  } catch (error) {
-    next(error)
-  }
-})
+  })
 
 // POST
 router.post('/',
