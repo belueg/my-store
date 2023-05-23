@@ -1,5 +1,7 @@
 const boom = require('@hapi/boom')
 const jwt = require('jsonwebtoken')
+
+//verify authenticated user
 function verifyAuth(req, res, next) {
   try {
     const token = req.headers.authorization
@@ -8,16 +10,25 @@ function verifyAuth(req, res, next) {
     }
 
     const tokenValue = token.replace('Bearer ', '');
-    const verifyToken = jwt.verify(tokenValue, process.env.JWT_SECRET)
-    console.log(verifyToken)
+    const tokenPayload = jwt.verify(tokenValue, process.env.JWT_SECRET)
     next()
   } catch (error) {
-    console.error('Authentication error:', error);
     res.status(401).json({ error: 'Unauthorized' });
   }
 }
 
-module.exports = { verifyAuth }
+// check roles
+function checkRoles(...roles) {
+  return (req, res, next) => {
+    const user = req.user
+    roles.includes(user.role) ? next() : next(boom.unauthorized());
+  }
+}
+
+module.exports = {
+  verifyAuth,
+  checkRoles
+}
 
 
 
