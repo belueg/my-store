@@ -51,6 +51,8 @@ router.post('/',
 
 //PATCH
 router.patch('/:id', validatorHandler(getCategorySchema, 'params'),
+  passport.authenticate('jwt', { session: false }),
+  checkRoles('admin'),
   validatorHandler(updateCategorySchema, 'body'),
   async (req, res, next) => {
     const body = req.body
@@ -71,6 +73,8 @@ router.patch('/:id', validatorHandler(getCategorySchema, 'params'),
 
 //DELETE
 router.delete('/:id', validatorHandler(getCategorySchema, 'params'),
+  passport.authenticate('jwt', { session: false }),
+  checkRoles('admin'),
   async (req, res, next) => {
     const { id } = req.params
 

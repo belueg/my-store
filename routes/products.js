@@ -1,11 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const ProductsService = require('../services/products.services')
-const boom = require('@hapi/boom')
 const service = new ProductsService()
 const validatorHandler = require('../middlewares/validatorHandler')
 const { createProductSchema, getProductSchema, updateProductSchema, queryProductSchema } = require('../schemas/product.schema')
-
+const { checkRoles } = require('../middlewares/auth.handler')
+const passport = require('passport')
 // GET
 router.get('/',
   validatorHandler(queryProductSchema, 'query'),
@@ -35,6 +35,8 @@ router.get('/:id',
 
 // POST
 router.post('/',
+  passport.authenticate('jwt', { session: false }),
+  checkRoles('admin'),
   validatorHandler(createProductSchema, 'body'),
   async (req, res, next) => {
     const body = req.body
@@ -53,6 +55,8 @@ router.post('/',
 
 //PATCH
 router.patch('/:id', validatorHandler(getProductSchema, 'params'),
+  passport.authenticate('jwt', { session: false }),
+  checkRoles('admin'),
   validatorHandler(updateProductSchema, 'body'),
   async (req, res, next) => {
     const body = req.body
@@ -73,6 +77,8 @@ router.patch('/:id', validatorHandler(getProductSchema, 'params'),
 
 //DELETE
 router.delete('/:id', validatorHandler(getProductSchema, 'params'),
+  passport.authenticate('jwt', { session: false }),
+  checkRoles('admin'),
   async (req, res, next) => {
     const { id } = req.params
 
