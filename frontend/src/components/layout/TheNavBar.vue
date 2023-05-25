@@ -1,10 +1,12 @@
 <script setup>
 import { useCartStore } from '../../stores/useCartStore';
+import { useLoginStore } from '../../stores/useLoginStore';
 import { onMounted, ref, computed } from 'vue'
 import axios from 'axios'
 const menuItems = ref([])
 
 const cartStore = useCartStore()
+const loginStore = useLoginStore()
 
 onMounted(async () => {
   try {
@@ -35,7 +37,7 @@ const categories = computed(() => {
           v-for="item in categories">
           {{ item.name }}
         </RouterLink>
-        <li class="nav__list--item">Login</li>
+        <RouterLink v-if="!loginStore.isLoggedIn" :to="{ name: 'login' }">Login</RouterLink>
         <RouterLink :to="{ name: 'cart' }">Cart <span class="nav__cart--count"> {{ cartStore.cartCount }}</span>
         </RouterLink>
       </ul>
@@ -70,7 +72,7 @@ const categories = computed(() => {
     }
   }
 
-  &__cart--count{
+  &__cart--count {
     color: black;
     font-weight: 700;
     background-color: white;
