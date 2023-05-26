@@ -17,7 +17,9 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:id', validatorHandler(getCategorySchema, 'params'), async (req, res, next) => {
+router.get('/:id',
+ validatorHandler(getCategorySchema, 'params'),
+async (req, res, next) => {
   const { id } = req.params
   try {
     const category = await service.findOne(id)
