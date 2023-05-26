@@ -23,6 +23,12 @@ const userSchema = {
     type: Sequelize.STRING,
     allowNull: false
   },
+  recoveryToken: {
+    type: Sequelize.STRING,
+    allowNull: true,
+    defaultValue: null,
+    field: 'recovery_token'
+  },
   createdAt: {
     type: DataTypes.DATE,
     defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),

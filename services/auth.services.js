@@ -3,7 +3,7 @@ const service = new UserService()
 const bcrypt = require('bcrypt')
 const boom = require('@hapi/boom')
 const nodemailer = require('nodemailer')
-
+const jwt = require('jsonwebtoken')
 class AuthService {
   async getUser(email, password) {
     const user = await service.findbyEmail(email)
@@ -18,13 +18,27 @@ class AuthService {
 
     return user
   }
-
-  async sendRecoveryEmail(email) {
+  async sendRecovery(email) {
     const user = await service.findbyEmail(email)
-    console.log("user", user)
     if (!user) {
       throw boom.unauthorized('invalid credentials')
     }
+    const recoveryToken = await jwt.sign({ sub: user.id }, process.env.JWT_SECRET, { expiresIn: '15min' })
+    //Guardar token en DB
+    await user.update({ recoveryToken })
+
+    const link = `http://myfrontend.com/recovery?token=${recoveryToken}`
+
+    const response = await this.sendMail({
+      from: '"Belu Enterprise" <belu@enterprise.com',
+      to: user.email,
+      subject: "Recover your password",
+      text: `Visit this link in order to recover your password: ${link}`,
+    })
+    return response
+  }
+
+  async sendMail(emailObject) {
 
     let transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
@@ -37,12 +51,7 @@ class AuthService {
     });
 
     // send mail with defined transport object
-    let info = await transporter.sendMail({
-      from: '"Belu Enterprise" <belu@enterprise.com',
-      to: "belg1294@gmail.com",
-      subject: "Recover your password",
-      text: "Hello, we received a request to recover account",
-    });
+    let info = await transporter.sendMail(emailObject);
   }
 
 }

@@ -23,7 +23,7 @@ router.post('/recovery',
     try {
       // chequear que su mail exista en la db y enviar correo para recuperar contraseña
       const { email } = req.body
-      await authServ.sendRecoveryEmail(email)
+      await authServ.sendRecovery(email)
 
       res.json({ message: "Email sent!" })
 
